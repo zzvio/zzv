@@ -120,7 +120,7 @@
                         <list>browser</list>
                     </attachList>
                     <mainClass>${mainClassName}</mainClass>
-                    <graalvmHome>/graal/Pipeline_softwares/graalvm-ee-nolic-java11-21.0.0.3</graalvmHome>
+                    <!-- <graalvmHome>/graal/Pipeline_softwares/graalvm-ee-nolic-java11-21.0.0.3</graalvmHome> -->
                     <enableSWRendering>true</enableSWRendering>
                     <releaseConfiguration>
                         <bundleVersion>${env.GITHUB_RUN_NUMBER}</bundleVersion>
