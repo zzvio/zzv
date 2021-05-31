@@ -35,11 +35,14 @@ jobs:
       #   with:
       #     gluon-license: ${{ secrets.GLUON_LICENSE }}
 
-      - name: Mkdir
+      - name: Gluon Compile
+        run: mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:compile
+
+      - name: Copy
         run: cp -r /Users/runner/work/zzv/zzv/target/client/arm64-ios/gensrc/ios/assets/Base.lproj /Users/runner/work/zzv/zzv/src/ios/assets/Base.lproj
 
       - name: Gluon Build
-        run: mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:build client:package
+        run: mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:link client:package
 
 
       # - uses: Apple-Actions/upload-testflight-build@master
