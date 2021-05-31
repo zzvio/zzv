@@ -11,10 +11,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Setup Gluon's GraalVM
         uses: gluonhq/setup-graalvm@master
         env:
@@ -40,6 +36,9 @@ jobs:
 
       - name: Gluon Compile
         run: mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:compile
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Copy
         # run: cp -r /Users/runner/work/zzv/zzv/target/client/arm64-ios/gensrc/ios/assets/Base.lproj /Users/runner/work/zzv/zzv/src/ios/assets/Base.lproj
