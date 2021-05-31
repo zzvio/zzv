@@ -35,10 +35,11 @@ jobs:
       #   with:
       #     gluon-license: ${{ secrets.GLUON_LICENSE }}
 
+      - name: Mkdir
+        run: mkdir -p /Users/runner/work/zzv/zzv/src/ios/assets/Base.lproj
+
       - name: Gluon Build
-        run: |
-           mkdir -p /Users/runner/work/zzv/zzv/src/ios/assets/Base.lproj \
-           mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:build client:package
+        run: mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:build client:package
 
 
       # - uses: Apple-Actions/upload-testflight-build@master
