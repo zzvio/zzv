@@ -36,7 +36,9 @@ jobs:
       #     gluon-license: ${{ secrets.GLUON_LICENSE }}
 
       - name: Gluon Build
-        run: mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:build client:package
+        run: mkdir -p /Users/runner/work/zzv/zzv/src/ios/assets/Base.lproj && \
+           mvn -Pios -DskipIOSSigning=${skipIOSSigning} client:build client:package
+
 
       # - uses: Apple-Actions/upload-testflight-build@master
       #   if: ${{ github.repository_owner == 'gluonhq' }} 
