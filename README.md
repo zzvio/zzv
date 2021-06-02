@@ -6,6 +6,10 @@
 ![Linux Android](https://github.com/FDelporte/ResistorCalculatorApp/workflows/Linux%20Android/badge.svg)
 ![iOS](https://github.com/FDelporte/ResistorCalculatorApp/workflows/iOS/badge.svg)
 
+## Dev setup before executing mvn client:build -X -e
+``
+ export GRAALVM_HOME=/graal/Pipeline_softwares/graalvm-ee-nolic-java11-21.0.0.3
+``
 ## About the application
 
 Proof-of-concept application created with JavaFX as a true "write once, run everywhere".
