@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="resistor-calculator-app" />
+        <module name="hellogluon" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="resistor-calculator-app" target="11" />
+      <module name="hellogluon" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

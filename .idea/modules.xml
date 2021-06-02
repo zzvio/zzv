@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/resistor-calculator-app.iml" filepath="$PROJECT_DIR$/resistor-calculator-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hellogluon.iml" filepath="$PROJECT_DIR$/hellogluon.iml" />
     </modules>
   </component>
 </project>

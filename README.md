@@ -1,110 +1,118 @@
-# ZZv is business workflow development application based on proof of stake blockchain for headless server, mobile phone and desktop
 
-![Linux JAR and Native](https://github.com/FDelporte/ResistorCalculatorApp/workflows/Linux%20JAR%20and%20Native/badge.svg)
-![MacOS](https://github.com/FDelporte/ResistorCalculatorApp/workflows/MacOS/badge.svg)
-![Windows](https://github.com/FDelporte/ResistorCalculatorApp/workflows/Windows/badge.svg)
-![Linux Android](https://github.com/FDelporte/ResistorCalculatorApp/workflows/Linux%20Android/badge.svg)
-![iOS](https://github.com/FDelporte/ResistorCalculatorApp/workflows/iOS/badge.svg)
+# HelloGluon CI
 
-## About the application
+This sample shows how to automatically build a Gluon Application using Github Actions.
 
-Proof-of-concept application created with JavaFX as a true "write once, run everywhere".
-Uses Gluon tools and GitHub actions to build native applications for all platforms.
+It uses a version of [HelloGluon](https://github.com/gluonhq/gluon-samples/tree/master/HelloGluon), a Hello World application with Java 11+, JavaFX 15+, Gluon Mobile and GraalVM.
+For more details about Gluon Applications in general, please have a look at the [Gluon docs](https://docs.gluonhq.com) or the [other samples](https://gluonhq.com/developers/samples/). 
 
-![Diagram showing the flow from a single JavaFX code through GitHub actions to multiple applications](images/github_actions_gluon_diagram.jpg)
+This sample focusses on the continuous integration using Github Actions on these platforms:
 
-For more info, check these posts which describe the full flow in detail:
+* Windows
+* MacOS
+* Linux
+* iOS
+* Android
+* Embedded - AArch64 Linux
 
-* [Building native applications for all PC and mobile platforms from a single JavaFX project with Gluon Mobile and GitHub Actions (webtechie.be)](https://webtechie.be/post/2020-11-24-javafx-gluon-mobile-github-actions/)
-* [Use GitHub Actions to automate your Gluon build and release cycle (gluonhq:com)](https://gluonhq.com/use-github-actions-to-automate-your-gluon-build-and-release-cycle/)
+All these platform specific workflows share these common steps:
 
-### Based on
+* Checkout your code
+* Setup the build environment, specific to the platform
+* Build the application
+* Upload the application
 
-* The Maven library [Resistor calculator](https://github.com/FDelporte/ResistorCalculator) 
-as described on ["Resistor color codes and calculations as a Java Maven library"](https://webtechie.be/post/2019-11-25-resistor-color-codes-and-calculations-a-java-maven-library/).
-and ["Calculating resistor value with a JavaFX application"](https://webtechie.be/post/2019-11-27-calculating-resistor-value-with-a-javafx-application/).
-* Existing JavaFX project of my book ["Getting started with Java on Raspberry Pi"](https://webtechie.be/books/), 
-which contains a JavaFX application for desktop only:
-["Example application: visualize the Raspberry Pi pins with JavaFX"](https://github.com/FDelporte/JavaOnRaspberryPi/tree/master/Chapter_02_Tools/javafx-resistors)
-* Starter application "Gluon Mobile - Multi View Project" with 
-[the Gluon plugin in IntelliJ IDEA](https://plugins.jetbrains.com/plugin/7864-gluon) 
-as described on ["Starting a JavaFX Project with Gluon Tools" (foojay.io)](https://foojay.io/today/starting-a-javafx-project-with-gluon-tools/).
- 
-Gluon Mobile Applications are Java applications written in JavaFX. These applications ensure that developers can create high performance, great looking, and cloud connected mobile apps from a single Java code base.
+Next to the above steps, for iOS and Android, the workflow includes steps to properly sign and upload the binary to the Play Store and App Store.
 
-### Get the app
 
-This application is published to the [Google Play](https://play.google.com/store/apps/details?id=be.webtechie.resistorcalculatorapp)
-and [Apple App Store](https://apps.apple.com/us/app/gluon-resistor-calculator/id1540638756) from [the fork on GluonHQ](https://github.com/gluonhq/ResistorCalculatorApp) 
 
-![QR code to get the application](images/onlink_to_resistorcalc_small.png)
+## Build setup
 
-### Screens and functionalities
+Building using Github Actions is not very different from building locally.
 
-The application provides two views.
+On top of a [default Gluon application](https://docs.gluonhq.com/#_getting_started), the following `releaseConfiguration` was added to the maven-client-plugin configuration:
 
-#### Calculate the value of a resistor based on the color bands
+    <releaseConfiguration>
+        <!-- for iOS -->
+        <bundleVersion>${env.GITHUB_RUN_NUMBER}</bundleVersion>
+        
+        <!-- for Android -->
+        <versionCode>${env.GITHUB_RUN_NUMBER}</versionCode>
+        <providedKeyStorePath>${env.GLUON_ANDROID_KEYSTOREPATH}</providedKeyStorePath>
+        <providedKeyStorePassword>${env.GLUON_ANDROID_KEYSTORE_PASSWORD}</providedKeyStorePassword>
+        <providedKeyAlias>${env.GLUON_ANDROID_KEYALIAS}</providedKeyAlias>
+        <providedKeyAliasPassword>${env.GLUON_ANDROID_KEYALIAS_PASSWORD}</providedKeyAliasPassword>
+    </releaseConfiguration>
+  </configuration>
 
-![Resistor color bands screen](images/color-bands.png)
+For iOS:
+* bundleVersion is set to the GITHUB_RUN_NUMBER, so each build will have unique CFBundleVersion. [See this doc](https://docs.gluonhq.com/#platforms_ios_distribution_build) for more information.
 
-#### Calculate the required resistor value for a LED in an electronics project
+For Android:
+* versionCode is set to the GITHUB_RUN_NUMBER, so each build will have a unique `android:versionCode`. [See this doc](https://docs.gluonhq.com/#platforms_ios_distribution_build) for more information.
+* keystore configuration are taken from env variables, that will be set by the workflow action.
 
-![LED resistor value screen](images/led-resistor.png)
+## Gluon license
 
-## Pre-requisites
+All workflows use this action this Gluon license action:
 
-Please checkout the prerequisites to run this application as a Maven project [at the Gluon website](https://github.com/gluonhq/client-maven-plugin#requirements).
+      - name: Gluon License
+        uses: gluonhq/gluon-build-license@v1
+        with:
+          gluon-license: ${{ secrets.GLUON_LICENSE }}
 
-## How to use the code on development PC
+Using a Gluon license is optional and depends on your situation.
+Have a look at the [Gluon website](https://gluonhq.com/products/mobile/buy/) for more information about licences or [contact us](https://gluonhq.com/about-us/contact-us/).
 
-> **Note**: The following are command line instructions. For IDE specific instructions please checkout
-[IDE documentation](https://docs.gluonhq.com/#getting-started-ide-plugins) of the client plugin.
 
-These applications can run on the JVM on desktop platforms. To run the application, execute the following command:
+## Platforms
 
-```
-mvn javafx:run
-```
+The Github action workflows are specified in [.github/workflows](https://github.com/gluonhq/hello-gluon-ci/tree/master/.github/workflows) and configured to be triggered on `push`. Depening on your own preference and requirements, this can of course be changed. Please refer to the https://docs.github.com/en/free-pro-team@latest/actions[GitHub Actions documentation] for more information.
 
-The same application can also run natively on any targeted OS, including Android, iOS, Linux, Mac and Windows.
+### Windows
 
-To create a native image, execute the following command:
+![Windows](https://github.com/gluonhq/hello-gluon-ci/workflows/Windows/badge.svg)
 
-```
-mvn client:build client:run
-```
+* Workflow file: [.github/workflows/windows.yml](https://github.com/gluonhq/hello-gluon-ci/blob/master/.github/workflows/windows.yml)
+* Detailed documentation: [Gluon documentation for Windows](https://docs.gluonhq.com/#platforms_windows) for more detailed information.
 
-> **Note**: The above client commands are target-platform dependent and might change depending on the platform.
-For more details, please check
-[Client Maven Goals](https://github.com/gluonhq/client-maven-plugin#2-goals).
+### MacOS
 
-## GitHub Actions
+![MacOS](https://github.com/gluonhq/hello-gluon-ci/workflows/MacOS/badge.svg)
 
-Separate GitHub Actions files are included in this repository:
+* Workflow file: [.github/workflows/macos.yml](https://github.com/gluonhq/hello-gluon-ci/blob/master/.github/workflows/macos.yml)
+* Detailed documentation: [Gluon documentation for Mac OS](https://docs.gluonhq.com/#platforms_macos) for more detailed information.
 
-* [maven-ios.yml](.github/workflows/maven-ios.yml): creates iPhone app, not fully working in this repository as no 
-Apple developer secrets and other required settings are available here. But you can use this as a reference how to set this up.
-* [maven-macos.yml](.github/workflows/maven-macos.yml): creates MacOS executable.
-* [maven-ubuntu-linux.yml](.github/workflows/maven-ubuntu-linux.yml): creates JAR and native Linux x64 application.
-* [maven-ubuntu-android.yml](.github/workflows/maven-ubuntu-android.yml): creates Android APK application.
-* [maven-windows.yml](.github/workflows/maven-windows.yml): creates Windows x64 executable.
 
-## Configuration
 
-To configure the client plugin, please checkout the [Configuration documentation](https://docs.gluonhq.com/client/#_configuration).
+### Linux
 
-## Gradle
+![Linux](https://github.com/gluonhq/hello-gluon-ci/workflows/Linux/badge.svg)
 
-Use Gradle to build native image:
+* Workflow file: [.github/workflows/linux.yml](https://github.com/gluonhq/hello-gluon-ci/blob/master/.github/workflows/linux.yml)
+* Detailed documentation: [Gluon documentation for Linux](https://docs.gluonhq.com/#platforms_linux) for more detailed information.
 
-	./gradlew build nativeCompile nativeLink
-	
-Executable found in `build/client/XXXX/resistor-calculator-app`
+          
+          
+### iOS
 
-## More information
+![iOS](https://github.com/gluonhq/hello-gluon-ci/workflows/iOS/badge.svg)
 
-Here are some helpful links:
+* Workflow file: [.github/workflows/ios.yml](https://github.com/gluonhq/hello-gluon-ci/blob/master/.github/workflows/ios.yml)
+* Detailed documentation: [Gluon documentation for iOS](https://docs.gluonhq.com/#platforms_ios) for more detailed information.
 
-* [Gluon documentation website](https://docs.gluonhq.com)
-* Gluon on GitHub: [Client Maven Plugin](https://github.com/gluonhq/client-maven-plugin) and [Client Gradle Plugin](https://github.com/gluonhq/client-gradle-plugin)
-* [GitHub: Building and testing Java with Maven](https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven)
+
+### Android
+
+![Android](https://github.com/gluonhq/hello-gluon-ci/workflows/Android/badge.svg)
+
+* Workflow file: [.github/workflows/android.yml](https://github.com/gluonhq/hello-gluon-ci/blob/master/.github/workflows/android.yml)
+* Detailed documentation: [Gluon documentation for Android](https://docs.gluonhq.com/#platforms_android) for more detailed information.
+
+
+### Embedded - AArch64 Linux
+
+![AArch64 Linux](https://github.com/gluonhq/hello-gluon-ci/workflows/aarch64-linux/badge.svg)
+
+* Workflow file: [.github/workflows/aarch64-linux.yml](https://github.com/gluonhq/hello-gluon-ci/blob/master/.github/workflows/aarch64-linux.yml)
+* Detailed documentation: [Gluon documentation for Embedded - AArch64 Linux](https://docs.gluonhq.com/#platforms_embedded) for more detailed information.

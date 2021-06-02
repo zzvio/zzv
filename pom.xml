@@ -2,11 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>be.webtechie</groupId>
-    <artifactId>resistor-calculator-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.gluonhq.samples</groupId>
+    <artifactId>hellogluon</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Resistor Calculator</name>
+
+    <name>HelloGluon</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,18 +19,8 @@
         <connect.version>2.0.1</connect.version>
         <javafx.maven.plugin.version>0.0.5</javafx.maven.plugin.version>
         <client.maven.plugin.version>0.1.41</client.maven.plugin.version>
-        <client.plugin.version>0.1.38</client.plugin.version>
-        <javafx.plugin.version>0.0.5</javafx.plugin.version>
-        <main.class>be.webtechie.ResistorCalculatorApp</main.class>
-        <skipIOSSigning>true</skipIOSSigning>
+        <main.class>io.zzv.ResistorCalculatorApp</main.class>
     </properties>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>snapshots</id>
-            <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -37,13 +28,6 @@
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>be.webtechie</groupId>
-            <artifactId>resistor-calculator</artifactId>
-            <version>0.1.4</version>
-        </dependency>
-
         <dependency>
             <groupId>com.gluonhq</groupId>
             <artifactId>charm-glisten</artifactId>
@@ -52,11 +36,6 @@
         <dependency>
             <groupId>com.gluonhq.attach</groupId>
             <artifactId>display</artifactId>
-            <version>${attach.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.gluonhq.attach</groupId>
-            <artifactId>orientation</artifactId>
             <version>${attach.version}</version>
         </dependency>
         <dependency>
@@ -83,6 +62,11 @@
             <groupId>com.gluonhq.attach</groupId>
             <artifactId>browser</artifactId>
             <version>${attach.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>be.webtechie</groupId>
+            <artifactId>resistor-calculator</artifactId>
+            <version>0.1.4</version>
         </dependency>
     </dependencies>
 
@@ -122,19 +106,13 @@
                         <list>lifecycle</list>
                         <list>statusbar</list>
                         <list>storage</list>
-                        <list>browser</list>
                     </attachList>
                     <mainClass>${main.class}</mainClass>
-                    <!-- <graalvmHome>/graal/Pipeline_softwares/graalvm-ee-nolic-java11-21.0.0.3</graalvmHome> -->
-                    <!-- <enableSWRendering>true</enableSWRendering> -->
                     <releaseConfiguration>
                         <!-- for iOS -->
                         <bundleVersion>${env.GITHUB_RUN_NUMBER}</bundleVersion>
                         <!-- for Android -->
                         <versionCode>${env.GITHUB_RUN_NUMBER}</versionCode>
-                        <skipSigning>${skipIOSSigning}</skipSigning>
-                        <providedSigningIdentity>${env.IOS_SIGNING_IDENTITY}</providedSigningIdentity>
-                        <providedProvisioningProfile>${env.IOS_PROVISIONING_PROFILE}</providedProvisioningProfile>
                         <providedKeyStorePath>${env.GLUON_ANDROID_KEYSTOREPATH}</providedKeyStorePath>
                         <providedKeyStorePassword>${env.GLUON_ANDROID_KEYSTORE_PASSWORD}</providedKeyStorePassword>
                         <providedKeyAlias>${env.GLUON_ANDROID_KEYALIAS}</providedKeyAlias>
@@ -160,18 +138,21 @@
                     <artifactId>display</artifactId>
                     <version>${attach.version}</version>
                     <classifier>desktop</classifier>
+                    <scope>runtime</scope>
                 </dependency>
                 <dependency>
                     <groupId>com.gluonhq.attach</groupId>
                     <artifactId>lifecycle</artifactId>
                     <version>${attach.version}</version>
                     <classifier>desktop</classifier>
+                    <scope>runtime</scope>
                 </dependency>
                 <dependency>
                     <groupId>com.gluonhq.attach</groupId>
                     <artifactId>storage</artifactId>
                     <version>${attach.version}</version>
                     <classifier>desktop</classifier>
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>
@@ -187,6 +168,34 @@
                 <client.target>android</client.target>
             </properties>
         </profile>
+        <profile>
+            <id>pi</id>
+            <properties>
+                <client.target>linux-aarch64</client.target>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.gluonhq.attach</groupId>
+                    <artifactId>display</artifactId>
+                    <version>${attach.version}</version>
+                    <classifier>desktop</classifier>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.gluonhq.attach</groupId>
+                    <artifactId>lifecycle</artifactId>
+                    <version>${attach.version}</version>
+                    <classifier>desktop</classifier>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.gluonhq.attach</groupId>
+                    <artifactId>storage</artifactId>
+                    <version>${attach.version}</version>
+                    <classifier>desktop</classifier>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 </project>
-
