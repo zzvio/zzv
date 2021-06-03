@@ -16,6 +16,10 @@ workflows:
 
 jobs: 
  build:
+  filters:
+    branches:
+      only:
+        - master
   machine: true
   steps:
     - add_ssh_keys:
@@ -26,7 +30,7 @@ jobs:
         name: Check commit message and build
         command: |
           commit_msg=$(git show -s --format=%s)
-          if [[ $commit_msg != *[COMPILE]* ]]; then 
+          if [[ $commit_msg != *\[COMPILE\]* ]]; then 
             echo "Pipeline not triggered"; 
           else 
             echo "Triggering pipeline"; 

@@ -12,9 +12,8 @@ RUN cd /root && \
     git clone git@github.com:zzvio/zzv.git ${githubDir}
 
 RUN cd $bitbucketDir && \
-    rsync -a . $githubDir --exclude .git
+    rsync -a . $githubDir --exclude .git --delete
 RUN cd $githubDir && \
     git add . && \
     git commit -m "Added new version from pipeline" && \
     git push
-
