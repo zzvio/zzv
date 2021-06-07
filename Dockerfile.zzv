@@ -17,4 +17,3 @@ RUN cd $githubDir && \
     git add . && \
     git commit -m "Added new version from pipeline" && \
     git push
-
