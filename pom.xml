@@ -19,7 +19,7 @@
         <connect.version>2.0.1</connect.version>
         <javafx.maven.plugin.version>0.0.5</javafx.maven.plugin.version>
         <client.maven.plugin.version>0.1.41</client.maven.plugin.version>
-        <main.class>io.zzv.ResistorCalculatorApp</main.class>
+        <main.class>io.zzv.view</main.class>
     </properties>
 
     <dependencies>
@@ -110,8 +110,8 @@
                     <mainClass>${main.class}</mainClass>
                     <releaseConfiguration>
                         <!-- for iOS -->
-                        <bundleVersion>${env.GITHUB_RUN_NUMBER}</bundleVersion>
-                        <!-- for Android -->
+			<bundleVersion>${env.GITHUB_RUN_NUMBER}</bundleVersion>
+			<!-- for Android -->
                         <versionCode>${env.GITHUB_RUN_NUMBER}</versionCode>
                         <providedKeyStorePath>${env.GLUON_ANDROID_KEYSTOREPATH}</providedKeyStorePath>
                         <providedKeyStorePassword>${env.GLUON_ANDROID_KEYSTORE_PASSWORD}</providedKeyStorePassword>

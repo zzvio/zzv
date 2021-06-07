@@ -1,4 +1,4 @@
-package io.zzv.view;
+package io.zzv.views;
 
 import io.zzv.element.Resistor;
 import io.zzv.event.AppEventListener;

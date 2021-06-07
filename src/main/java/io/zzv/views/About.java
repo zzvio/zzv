@@ -1,4 +1,4 @@
-package io.zzv.view;
+package io.zzv.views;
 
 import com.gluonhq.attach.browser.BrowserService;
 import com.gluonhq.attach.util.Services;

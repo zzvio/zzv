@@ -1,4 +1,4 @@
-package io.zzv.view;
+package io.zzv.views;
 
 import be.webtechie.resistorcalculator.util.Calculate;
 import be.webtechie.resistorcalculator.util.Convert;
