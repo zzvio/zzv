@@ -21,16 +21,11 @@ jobs:
       - name: Make staging directory
         run: mkdir staging
 
-      - name: Gluon License
-        uses: gluonhq/gluon-build-license@v1
-        with:
-          gluon-license: ${{ secrets.GLUON_LICENSE }}
-
       - name: Gluon Build
         run: mvn -Pdesktop client:build client:package
 
       - name: Copy native client to staging
-        run: cp -r target/client/x86_64-linux/HelloGluon* staging
+        run: cp -r target/client/x86_64-linux/Zzv-view* staging
 
       - name: Upload
         uses: actions/upload-artifact@v2
