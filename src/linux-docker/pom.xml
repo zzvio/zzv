@@ -108,6 +108,7 @@
                         <list>storage</list>
                     </attachList>
                     <mainClass>${main.class}</mainClass>
+                    <enableSWRendering>true</enableSWRendering>
                     <releaseConfiguration>
                         <!-- for iOS -->
 			            <bundleVersion>${env.GITHUB_RUN_NUMBER}</bundleVersion>
